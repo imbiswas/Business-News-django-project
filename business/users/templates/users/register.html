@@ -1,0 +1,47 @@
+{% extends "home/base.html" %}
+{% block content%}
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>SignUp Form</title>
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}"/> -->
+</head>
+  <body>
+
+      <div class="container">
+          <div class=" card shadow" style="width: 450px; margin: 0 auto; padding: 20px;">
+              <div class="text-center">
+                      <img class="mb-2 text-center" src="{%static 'firefox.jpg' %}" alt="" width="350" height="150" />
+              </div>
+              <form class="form-signin login" action="" method="POST">
+                  
+                  <h4 class="mb-3 font-weight-normal text-center">
+                      Register Your Account
+                      </h2>
+                      <div class="agileits-top">
+                          <form action="" method="post">
+                            {% csrf_token %}
+                                          
+                            <div >
+                              {{form|crispy}}
+                            </div>
+                            <div class="wthree-text">
+                              <label class="anim">
+                                <input type="checkbox" class="checkbox" required="">
+                                <span>I Agree To The Terms & Conditions</span>
+                              </label>
+                              <div class="clear"> </div>
+                            </div>
+                            <button id="submit" name="submit" class="btn btn-primary" type="submit">Sign Up</button>
+                          </form>
+                          <br>
+                          <p>Already have an Account? <a href="{% url 'signin' %}"> Signin Now!</a></p>
+                        </div>
+              </form>
+          </div>
+      </div>
+</body>
+</html>
+{% endblock content%}

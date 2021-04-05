@@ -1,0 +1,270 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block content%}
+
+
+
+<div class="container">
+
+    <br />
+
+    {% if request.GET.q != '' %}
+    {% if results %}
+    <h1>Results for <b>{{ request.GET.q }}</b></h1>
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="blog-list clearfix">
+                <div class="section-title">
+                    <h3 class="color-green"><a href="blog-category-01.html" title="">Searched News</a></h3>
+                </div><!-- end title -->
+                {% for result in results%}
+                <div class="blog-box row " id="{{result.slug}}" data-heading="{{result.Heading}}"
+                    data-category="{{results.category}}" data-timestamp="{{result.timestamp}}"
+                    data-news="{{result.News}}" data-author="{{result.author}}" data-toggle="modal"
+                    data-target="">
+                    <div class="col-md-4">
+                    <a href="/news/{{result.slug}}" title="">
+                     <div class="post-media" id="media-grab">
+                            
+                                <img src="{{ result.images_set.first.image.url }}" alt="" class="img-fluid"
+                                    style="height: 200px; object-fit: cover">
+                                    {% for result in product.images_set.all %} 
+                                                        <p src="{{p.image.url}}" style="display: none;">
+                                                        {% endfor %}
+                                <div class="hovereffect"></div>
+                            
+                        </div><!-- end media -->
+                    </a>
+                       
+                    </div><!-- end col -->
+                    <div class="blog-meta big-meta col-md-8">
+                        <h4>{{result.Heading}}
+                        </h4>
+                        <p class="text-justify">{{result.excerpt}}</p>
+                        <small><a href="/news/{{result.slug}}" title="">{{result.category}}</a></small>
+                        <small><a href="single.html" title="">{{result.timestamp}}</a></small>
+                        <small><a href="blog-author.html" title="">by {{result.author}}</a></small>
+                    </div><!-- end meta -->
+                </div><!-- end blog-box -->
+                <hr class="invis">
+                {% endfor %}
+            </div><!-- end blog-list -->
+            <hr class="invis">
+            
+                    
+                        <div class="banner-spot clearfix">
+                            <div class="banner-img" style="width: 100%">
+                                    <img src="https://designertask.com/wp-content/uploads/2018/05/soundcloud-banner-size.png" alt="" class="img-fluid" style="height: 100px; object-fit: cover;">
+                            </div><!-- end banner-img -->
+                        </div><!-- end banner -->
+            
+            
+            <div class="section-title mt-4">
+                        <h3 class="color-yellow"><a href="blog-category-01.html" title="">You May Also Like</a></h3>
+                    </div><!-- end title -->
+            <div class = "row">
+            {% for result in recommended_news%}
+                <div class="col-lg-4">
+                   
+                    
+                    <div class="blog-box">
+                    <a href="/news/{{result.slug}}" title="">
+                    <div class="post-media">
+                            
+                                <img src="{{ result.images_set.first.image.url }}" alt="" class="img-fluid" style="height: 200px; object-fit: cover;">
+                                <div class="hovereffect">
+                                    <span class="videohover"></span>
+                                </div><!-- end hover -->
+                        
+                        </div><!-- end media -->
+                    </a>
+                        
+                        <div class="blog-meta">
+                            <h4><a href="/news/{{result.slug}}" title="">{{result.Heading}}</a></h4>
+                            <small><a href="blog-category-01.html" title="">{{results.category}}</a></small>
+                            <small><a href="blog-category-01.html" title="">{{result.timestamp}}</a></small>
+                        </div><!-- end meta -->
+                    </div><!-- end blog-box -->
+    
+                    <hr class="invis">
+                    
+
+    
+                </div><!-- end col -->
+                {% endfor %}
+
+            
+                        
+            </div><!-- row -->
+        </div><!-- end col -->
+        <div class="col-lg-3">
+                <div class="sidebar">
+                        <div class="widget">
+                                <div class="section-title">
+                                        <h3 class="color-green"><a href="blog-category-01.html" title="">Recent Posts</a></h3>
+                                    </div><!-- end title -->
+                                
+                                <div class="blog-list-widget">
+                                    <div class="list-group">
+                                            {% for items in recommended_news%}
+                                        
+                                        <a href="news/{{items.slug}}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                            <div class="w-100 justify-content-between">
+                                                <img src="{{ items.images_set.first.image.url }}" alt="" class="img-fluid float-left">
+                                                <h5 class="mb-1">{{items.Heading}}</h5>
+                                                <small>12 Jan, 2016</small>
+                                            </div>
+                                        </a>
+                                        {% endfor  %}
+                                    </div>
+                                </div><!-- end blog-list -->
+                            </div><!-- end widget -->
+                            <div class="widget">
+                                    <h2 class="widget-title">Advertising</h2>
+                                    <div class="banner-spot clearfix">
+                                        <div class="banner-img">
+                                            <img src="http://localhost:8000/media/images/beautiful-cascade-environment-460621.jpg" alt="" class="img-fluid">
+                                        </div><!-- end banner-img -->
+                                    </div><!-- end banner -->
+                                </div><!-- end widget -->
+                                <div class="widget">
+                                        <div class="section-title">
+                                                <h3 class="color-green"><a href="blog-category-01.html" title="">Popular Posts</a></h3>
+                                            </div><!-- end title -->
+                                        {% for items in recommended_news%}
+                                        <div class="blog-box">
+                                            <div class="post-media">
+                                                <a href="news/{{items.slug}}" title="">
+                                                    <img src="{{ items.images_set.first.image.url }}" alt="" class="img-fluid">
+                                                    <div class="hovereffect">
+                                                        <span class="videohover"></span>
+                                                    </div><!-- end hover -->
+                                                </a>
+                                            </div><!-- end media -->
+                                            <div class="blog-meta">
+                                                <h4><a href="news/{{items.slug}}" title="">{{items.Heading}}</a></h4>
+                                                <small><a href="blog-category-01.html" title="">{{items.category}}</a></small>
+                                                <small><a href="blog-category-01.html" title="">{{items.timestamp}}</a></small>
+                                            </div><!-- end meta -->
+                                        </div><!-- end blog-box -->
+                                        <hr class="invis">
+                                        {% endfor %}
+                                </div>
+                </div>
+
+        </div><!-- end col -->
+    </div><!-- end row -->
+</div>
+<!-- MOdal something -->
+<div class="modal fade {{results.author}}" id="asdf" tabindex="-1" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" style="max-width: 1200px">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div class="row">
+                    <div class="col-md-12 col-lg-7 col-sm-12">
+                        <div class="owl-two owl-carousel owl-theme" id="owl-images">
+                        </div>
+                        <div class='selectors'>
+                            <ul>
+                                <li>
+                                    <input id='c1'>
+                                    <label for='c1'><a
+                                            href="http://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+                                            target="_blank"><i class="fab fa-facebook fa-2x"></i></a></label>
+                                    <!-- <label for='c1'><i class="fab fa-facebook fa-2x"></i></label></a> -->
+                                </li>
+                                <li>
+                                    <input id='c2'>
+                                    <label for='c2'><a
+                                            href="http://twitter.com/share?url={{ request.build_absolute_uri }}news/{{results.slug}}"
+                                            target="_blank"><i class="fab fa-twitter fa-2x"></i></a></label>
+                                </li>
+                                <li>
+                                    <input id='c3'>
+                                    <label for='c3'><i class="fab fa-linkedin fa-2x"></i></label>
+                                </li>
+                            </ul>
+                            <button><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-lg-5 col-sm-12 px-3 mob-pad">
+                        <h4 class="pt-4" id="heads"></h4>
+                        <i class="fas fa-envelope mr-2"></i><span id="timestamp"> </span>
+                        <i class="fas fa-user ml-4 mr-2"></i><span id="author"> </span>
+                        <hr>
+                        <div class="news-content">
+                            <p class="text-justify" id="news">
+
+                            </p>
+                            <h5 class="mb-3 text-center">Comments</h5>
+                            <div class="fb-comments" data-href="http://localhost:8000/news/all" data-width="15 px"
+                                data-numposts="5"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MOdal End  -->
+{% else %}
+No search results for this query
+{% endif %}
+{% endif %}
+<script>
+    $(document).ready(function () {
+        $(".post-media").on("click", function () {
+            // var dataId = $(this).attr("data-heading");
+            $(this).addClass("actives")
+            // $('.post-media').eq(0).attr('id', 'foobar');
+            var imagesss = $('.actives').children('img').map(function () {
+                return $(this).attr('src')
+            }).get()
+
+            // alert("The data-id of clicked item is: " + imagesss);
+
+
+            $('#asdf').on('show.bs.modal', function (event) {
+                var imagess = $('#media-grab').children('img').map(function () {
+                    return $(this).attr('src')
+                }).get()
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var heading = button.data('heading')
+                var news = button.data('news')
+                var category = button.data('category')
+                var timestamp = button.data('timestamp')
+                var images = button.data('images')
+                var author = button.data('author') // Extract info from data-* attributes
+                // If necessary, you could  an AJAX request here (and then do the updating in a callback).
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                modal.find('#heads').text(heading)
+                modal.find('#news').text(news)
+                modal.find('#category').text(category)
+                modal.find('#author').text(author)
+                modal.find('#timestamp').text(timestamp)
+                var i = 0,
+                    len = imagesss.length;
+                for (; i < imagesss.length; i++) {
+                    // modal.find('#owl-images').attr('src', imagess[3])
+                    // modal.find('#owl-images').append("<div class='item'><img class='roll' src='" + imagess[i] + "'></div>");
+                    modal.find('#owl-images').trigger('add.owl.carousel', ['<div class="item" id="items-id"><img src="' + imagesss[i] + '" alt="" class="carousel-images"></div>'])
+                        .trigger('refresh.owl.carousel');
+
+                    //    x.append("<img class='roll' src='" + imagess[i] + "'>");
+                }
+
+
+            })
+        });
+
+    });
+</script>
+<!-- <script src="{% static 'owlcarousel/script.js' %}" type="text/JavaScript"></script> -->
+<script src="{% static 'js/owl.carousel.min.js' %}" type="text/JavaScript"></script>
+<script src="{% static 'js/all_news.js' %}" type="text/JavaScript"></script>
+<script src="{% static 'js/urlchange.js' %}" type="text/JavaScript"></script>
+{% endblock%}

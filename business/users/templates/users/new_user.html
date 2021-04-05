@@ -1,0 +1,201 @@
+
+{% block content%}
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SignUp Form</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'custommain.css' %}" />
+</head>
+
+<body class="whole-back">
+    <main class="">
+        <div class="container main-back grid pt-5 pb-5">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h1>Add A New User</h1>
+                </div>
+            </div>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <!--Username ko block-->
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <div class="input-group mt-4 mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i
+                                        class="fas fa-user-ninja"></i></span>
+                            </div>
+                            {{form.username}}
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+                <div class="row">
+                    <!--First Name ko block-->
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <div class="input-group mt-4 mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                            </div>
+                            {{form.first_name}}
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+
+                <div class="row">
+                    <!--Last Name ko block-->
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <div class="input-group mt-4 mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                            </div>
+                            {{form.last_name}}
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+
+                <div class="row">
+                    <!--Email ko block-->
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <div class="input-group mt-4 mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
+                            </div>
+                            {{form.email}}
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+
+                
+
+                <div class="row">
+                    <!--Password ko block-->
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <div class="input-group mt-4 mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i
+                                        class="fas fa-fingerprint"></i></span>
+                            </div>
+                            {{form.password1}}
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+
+                <div class="row">
+                    <!--Retype Password ko block-->
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <div class="input-group mt-4 mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i
+                                        class="fas fa-fingerprint"></i></span>
+                            </div>
+                            {{form.password2}}
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+                <div class="row">
+                    <!--Retype Password ko block-->
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <div class="input-group mt-4 mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i
+                                        class="fas fa-lock"></i></span>
+                            </div>
+                            {{ form.user_permissions }}
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+                <div class="row">
+                    <!--Checkbox-->
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <div class="input-group custom-control custom-checkbox mt-4 mb-2">
+                            {{form.is_staff}}
+                            <!-- <input type="checkbox" class="custom-control-input" id="customCheck1"> -->
+                            <label class="custom-control-label" for="id_is_staff">
+                                Staff Status
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <div class="input-group mt-4 mb-2 pt-4">
+
+                            <button id="submit" name="btnAddUser" class="btn btn-primary" type="submit">Add
+                                user</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        $(document).ready(function () {
+            var fnx = document.getElementById("id_first_name");
+            fnx.classList.add("form-control");
+            fnx.placeholder = "First Name*";
+        });
+
+        $(document).ready(function () {
+            var fnx = document.getElementById("id_last_name");
+            fnx.classList.add("form-control");
+            fnx.placeholder = "Last Name*";
+        });
+
+        $(document).ready(function () {
+            var fnx = document.getElementById("id_email");
+            fnx.classList.add("form-control");
+            fnx.placeholder = "Email*";
+        });
+
+        $(document).ready(function () {
+            var fnx = document.getElementById("id_username");
+            fnx.classList.add("form-control");
+            fnx.placeholder = "Username*";
+        });
+
+        $(document).ready(function () {
+            var fnx = document.getElementById("id_password1");
+            fnx.classList.add("form-control");
+            fnx.placeholder = "Password*";
+        });
+
+        $(document).ready(function () {
+            var fnx = document.getElementById("id_password2");
+            fnx.classList.add("form-control");
+            fnx.placeholder = "Re-type Password*";
+        });
+
+
+        $(document).ready(function () {
+            var fnx = document.getElementById("id_is_staff");
+            fnx.classList.add("form-check-input");
+            fnx.classList.add("custom-control-input");
+        });
+    </script>
+</body>
+
+</html>
+{% endblock content%}

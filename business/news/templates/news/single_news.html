@@ -1,0 +1,216 @@
+{% extends 'home/base.html' %}  
+{% load static %}
+<script src="{% static 'hitcount/jquery.postcsrf.js' %}"></script>
+{% load hitcount_tags %}
+{% block title %}<title>{{headline_news.Heading}}</title>{% endblock title %}
+
+{% block headerbanner %}
+    <div class="banner-spot clearfix">
+        <div class="banner-img">
+            {% for h in header_ads  %}
+                <a href="ad/clickad/{{h.pk}}" target="_blank"><img src="{{ h.image.url }}" alt=""></a>
+            {% endfor %}                
+        </div><!-- end banner-img -->
+    </div><!-- end banner -->
+{% endblock %}
+
+{%block content%}
+<script
+  async
+  defer
+  crossorigin="anonymous"
+  src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v4.0"
+></script>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8  mt-4">
+      <div class="owl-two owl-carousel owl-theme">
+        {% for p in headline_news.images_set.all %}
+        <div class="item">
+          <img
+            src="{{p.image.url}}"
+            alt=""
+            style="width: 100%; object-fit: contain;"
+          />
+          <!-- Selectors -->
+          <!-- selectors end -->
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="px-4">
+        <div id="news">
+          <h4 class="pt-4">{{headline_news.Heading}}</h4>
+          <i class="fas fa-envelope mr-2"></i>
+          <span> {{headline_news.timestamp}}</span>
+          <i class="fas fa-user ml-4 mr-2"></i>
+          <span> {{headline_news.author}}</span>
+          <i class="fas fa-eye ml-4 mr-2"></i>
+          <span> {% get_hit_count for headline_news %}</span>
+          <hr />
+          <div class="news-content">
+            <!-- ==================== -->
+            <p class="text-justify" id="single-news-content">
+              {{headline_news.News}}
+            </p>
+            <!-- ==================== -->
+          </div>
+        </div>
+        <h5 class="mb-3 text-center">Comments</h5>
+        <div
+          class="fb-comments"
+          data-href="http://localhost:8000/news/{{headline_news.slug}}"
+          data-width="15px"
+          data-numposts="5"
+        ></div>
+      </div>
+      <div class="banner-spot clearfix">
+        <div class="banner-img" style="width: 100%">
+          <img
+            src="https://designertask.com/wp-content/uploads/2018/05/soundcloud-banner-size.png"
+            alt=""
+            class="img-fluid"
+            style="height: 100px; object-fit: cover;"
+          />
+        </div>
+        <!-- end banner-img -->
+      </div>
+      <!-- end banner -->
+      <div class="section-title">
+        <h3 class="color-yellow">
+          <span class="title">You May Also Like</span>
+        </h3>
+      </div>
+      <!-- end title -->
+      <div class="row">
+        {% for items in recommended_news %}
+        <div class="col-md-4">
+          <div class="category-go">
+            <a href="/news/{{items.slug}}"><img src="{{ items.images_set.first.image.url }}" alt=""></a>
+              <a href="/news/{{items.slug}}"><h2> {{items.Heading}} </h2></a>
+              <p> {{items.category}} | {{items.timestamp}}  </p>
+          </div>
+      </div>
+        <!-- end col -->
+        {% endfor %}
+      </div>
+      <!-- row -->
+    </div>
+    <!-- start col -->
+
+    <div class="col-lg-4 mt-4">
+      <div class="sidebar">
+        <div class="widget">
+          <div class="section-title">
+            <h3 class="color-green">
+              <span class="title">Recent</span>
+            </h3>
+          </div>
+          <!-- end title -->
+
+          <div class="blog-list">
+            <div class="list-group">
+              {% for items in recent_news %}
+              <a href="{{items.slug}}">
+                <div class="side-news-recent d-flex">
+                  <img src="{{ items.images_set.first.image.url }}" alt="">
+                  <div class="desc">
+                    <h2> {{items.Heading}} </h2>
+                  </div>
+                </div>
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+          <!-- end blog-list -->
+        </div>
+        <!-- end widget -->
+        <div class="widget">
+          <h2 class="widget-title">Ad</h2>
+          <div class="banner-spot clearfix">
+            <div class="banner-img">
+              <img
+                src="https://designertask.com/wp-content/uploads/2018/05/soundcloud-banner-size.png"
+                alt=""
+                class="img-fluid"
+              />
+            </div>
+            <!-- end banner-img -->
+          </div>
+          <!-- end banner -->
+        </div>
+        <!-- end widget -->
+
+        <div class="widget">
+          <div class="section-title">
+            <h3 class="color-green">
+              <span class="title">Headlines</span>
+            </h3>
+          </div>
+          <!-- end title -->
+
+          <div class="owl-popular owl-theme owl-carousel">
+            {% for items in headlines%}
+            <div class="item">
+              <div class="category-go">
+                <a href="{{items.news_id.slug}}"><img src="{{ items.news_id.images_set.first.image.url }}" alt=""></a>
+                <h2> {{items.news_id.Heading}} </h2>
+          <p> {{items.news_id.author}} | {{items.news_id.timestamp}}| Views: {% get_hit_count for headline_news %}  </p>
+            </div>
+            </div>
+            {% endfor %}
+          </div>
+      
+          <!-- end blog-box -->
+
+          <hr class="invis" />
+          
+        </div>
+
+
+        <div class="widget">
+          <div class="section-title">
+            <h3 class="color-green">
+              <span class="title">Popular</span>
+            </h3>
+          </div>
+          <!-- end title -->
+
+          <div class="owl-popular owl-theme owl-carousel">
+            {% for items in popular_posts%}
+            <div class="item">
+              <div class="category-go">
+                <a href="{{items.slug}}"><img src="{{ items.images_set.first.image.url }}" alt=""></a>
+                <h2> {{items.Heading}} </h2>
+          <p> {{items.author}} | {{items.timestamp}}| Views: {% get_hit_count for headline_news %}  </p>
+            </div>
+            </div>
+            {% endfor %}
+          </div>
+      
+          <!-- end blog-box -->
+
+          <hr class="invis" />
+          
+        </div>
+      </div>
+    </div>
+    <!-- end col -->
+  </div>
+</div>
+<!-- <script src="{% static 'owlcarousel/script.js' %}" type="text/JavaScript"></script> -->
+<script
+  src="{% static 'js/owl.carousel.min.js' %}"
+  type="text/JavaScript"
+></script>
+<script src="{% static 'js/all_news.js' %}" type="text/JavaScript"></script>
+<script src="{% static 'js/jquery.min.js' %}" type="text/JavaScript"></script>
+{% csrf_token %}
+<script type="text/javascript">
+  var newsId = "{{headline_news.id}}";
+  //var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+  //console.log(csrftoken);
+</script>
+<script src="{% static 'js/tracker.js' %}" type="text/JavaScript"></script>
+{% endblock %}

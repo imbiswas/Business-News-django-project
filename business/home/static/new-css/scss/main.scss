@@ -1,0 +1,67 @@
+//values
+$apricot: #fbceb1;
+$oldlace: #FDF5E6;
+$argentinianBlue: #6CB4EE;
+
+//mixins
+@mixin scrollbar-fix{
+  &::-webkit-scrollbar{
+    display: none;
+  }
+  -ms-overflow-style: none;
+}
+
+//styles
+.title {
+  background: $oldlace;
+  padding: 2px 10px;
+  border-radius: 5px;
+  text-transform: capitalize;
+  background: $oldlace;
+  color: lighten(black, 20);
+}
+
+.navbar {
+  background: $oldlace !important;
+}
+
+#news{
+  background: transparent !important;
+}
+
+.header__nav{
+  background: red;
+  overflow: hidden;
+  &--container{
+    padding: 5px 2px;
+    display: flex ;
+    flex-direction: row;
+    align-content: center;
+    font-size: 1.2em;
+    background: darken($oldlace, 5);
+    border-bottom: outset 2px black !important;
+  }
+  &--wrapper{
+    overflow-x: auto;
+    overflow-y: hidden;
+    @include scrollbar-fix;
+  }
+  &--link{
+    text-decoration: underline !important;
+    color: darkslategray;
+    padding: 5px;
+    text-transform: capitalize;
+  }
+  &--icon{
+    color: black;
+    font-weight: bold;
+    border-right: solid 2px black;
+    padding-right: 5px;
+  }
+}
+
+@media only screen and (max-width: 576px){
+  .header__nav--icon{
+    display: none;
+  }
+}

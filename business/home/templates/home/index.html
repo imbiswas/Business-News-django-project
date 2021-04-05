@@ -1,0 +1,362 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% load hitcount_tags %}
+{% block title %}<title>Business News</title>{% endblock title %}
+
+{% block headerbanner %}
+    <div class="banner-spot clearfix">
+        <div class="banner-img">
+            {% for h in header_ads  %}
+                <a href="ad/clickad/{{h.pk}}" target="_blank"><img src="{{ h.image.url }}" alt=""></a>
+            {% endfor %}                
+        </div><!-- end banner-img -->
+    </div><!-- end banner -->
+{% endblock %}
+
+{% block content %}
+
+
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v4.0"></script>
+
+<!-- <script type="text/javascript">
+    $('#modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var companyId = button.data('companyId');
+
+        var modal = $(this)
+        modal.find('#deleteForm').attr("action", "something" + "/" + companyId)
+        modal.find('#deleteForm input').val(companyId)
+    })
+</script> -->
+
+<!-- Trigger the modal with a button -->
+<!-- <a href="#Modal" class="btn btn-info btn-lg">Open modal</a> -->
+<!-- Modal -->
+
+
+<!-- <script>
+    $(document).ready(function(){
+        $(".gallery li").on("click", function(){
+            var dataId = $(this).attr("data-id");
+            var dataClass = $(this).attr("data-class");
+            alert("The data-id of clicked item is: " + dataClass);
+        });
+    });
+    </script> -->
+
+
+
+<section class="section">
+    <div class="container">
+    <style>
+        .category-go img{
+            width:100%;
+            height:200px;
+            object-fit: cover;
+        }
+        .category-go h2{
+            font-size:17px;
+            line-height: 1.4;
+            margin-top:15px;
+            margin-bottom:0px;
+        }
+        .category-go p{
+            font-size:12px;
+        }
+        .category-show{
+            padding:0px 15px;
+            background: #60a3ab;
+            width:fit-content;
+            margin-bottom:20px;
+        }
+        .category-show h2{
+            font-size:15px;
+            color: #ffffff;
+            margin:0;
+        }
+    </style>
+       
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-title">
+                <div class="category-show" style="margin-top:20px;">
+                    <h2>Headlines</h2>
+                </div>
+            </div><!-- end title -->
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="top-news-container">
+                {% for items in headline_news  %}
+
+                <div class="news-data"> 
+                    <a href="news/{{items.news_id.slug}}">
+                        <img src="{{ items.news_id.images_set.first.image.url }}" alt="">
+                    </a>
+                
+                <div class="news-description">
+                    <p> {{items.news_id.category}} | {{items.news_id.timestamp}} </p>
+                    <h2> {{items.news_id.Heading}} </h2>
+                </div>
+            </div>
+                {% endfor %}
+        </div>
+                  
+        </div><!-- end col -->
+
+    </div><!-- end row -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-title">
+                <div class="category-show">
+                    <h2>Recommended News</h2>
+                </div>
+            </div><!-- end title -->
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="top-news-container">
+                {% comment %} {% if user.is_authenticated and recommended_news %} {% endcomment %}
+                {% for items in recommended_news  %}
+
+                <div class="news-data"> 
+                    <a href="news/{{items.slug}}">
+                        <img src="{{ items.images_set.first.image.url }}" alt="">
+                    </a>
+        
+                    <div class="news-description">
+                        <p> {{items.category}} | {{items.timestamp}} </p>
+                        <h2> {{items.Heading}} </h2>
+                    </div>
+                </div>
+                {% endfor %}
+            {% comment %} {% endif %} {% endcomment %}
+            </div>
+        </div><!-- end col -->
+    </div><!-- end row -->
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-title">
+                <div class="category-show" style="margin-top:20px;">
+                    <h2>Popular News</h2>
+                </div>
+            </div><!-- end title -->
+        </div>
+        {% for items in popular_news  %}
+            <div class="col-md-3">
+                <div class="category-go">
+                    <a href = "news/{{items.slug}}"><img src="{{items.images_set.first.image.url}}" alt=""></a>
+                    <a href = "news/{{items.slug}}"><h2>{{items.Heading}}</h2></a>
+                    <p> {{items.author}} | {{items.timestamp}}  </p>
+                </div>
+            </div>
+        {% endfor %}
+        
+    </div>
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="blog-list clearfix">
+                <div class="col-md-12 pl-0">
+                    <div class="section-title">
+                        <div class="category-show">
+                            <h2>Latest News</h2>
+                        </div>
+                    </div><!-- end title -->
+                </div>
+                {% for items in news%}
+                <div class="blog-box row">
+                    <div class="col-md-4">
+                        <div class="post-media">
+                            <a href="/news/{{items.slug}}" title="">
+                                <img src="{{ items.images_set.first.image.url }}" alt=""
+                                    class="img-fluid" style="height: 200px; object-fit: cover">
+                                <div class="hovereffect"></div>
+                            </a>
+                        </div><!-- end media -->
+                    </div><!-- end col -->
+
+                    <div class="blog-meta big-meta col-md-8">
+                        <h4><a href="/news/{{items.slug}}" title="">{{items.Heading}}</a>
+                        </h4>
+                        <p>{{items.excerpt}}</p>
+                        <small><a href="blog-category-01.html" title="">{{items.category}}</a></small>
+                        <small><a href="single.html" title="">{{items.timestamp}}</a></small>
+                        <small><a href="blog-author.html" title="">by {{items.author}}</a></small>
+                    </div><!-- end meta -->
+                </div><!-- end blog-box -->
+
+                <hr class="invis">
+                {% endfor %}
+
+                
+
+                
+            </div><!-- end blog-list -->
+
+            <hr class="invis">
+
+        </div><!-- end col -->
+        <div class="col-lg-3">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <div class="category-show">
+                        <h2>Advertisement</h2>
+                    </div>
+                    {% for ads in sidebar_ads  %}
+                         <a href="ad/clickad/{{ads.pk}}" target="_blank"><img src="{{ ads.image.url }}" alt=""></a>
+                    {% endfor %}
+                </div><!-- end title -->
+            </div>
+    </div><!-- end row -->
+    </div>
+    
+        
+
+        <hr class="invis1">
+
+       
+
+        <!-- MOdal End  -->
+
+
+        <div class="banner-spot clearfix">
+                <div class="banner-img">
+                        <img src="https://hamrobazaar.com/layout_images/logo.gif" alt="" class="img-fluid" style="height: 100px; object-fit: contain;">
+                </div><!-- end banner-img -->
+            </div><!-- end banner -->
+
+
+
+        <section class="section first-section">
+            <div class="container-fluid">
+                <!-- <h1> Categories </h1> -->
+                {% for category in categories %}
+                
+
+                <div class="col-md-12 pl-0">
+                    <a href="{% url 'from_category' category %}">
+                        <div class="section-title">
+                            <div class="category-show">
+                                <h2>{{category}}</h2>
+                            </div>
+                        </div><!-- end title -->
+                    </a>
+                </div>
+                
+                
+                    <div class="owl-one owl-carousel owl-theme">
+                        {% for product in category.get_products %}
+                        <div class="item">
+                            <div class="category-go">
+                                <a href="news/{{product.slug}}"><img src="{{ product.images_set.first.image.url }}" alt=""></a>
+                                <a href="news/{{product.slug}}"><h2> {{product.Heading}} </h2></a>
+                                <p> {{product.author}} | {{product.timestamp}}  </p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>  
+            {% endfor %}
+            </div>
+        </section>
+        
+        
+        <section>
+
+
+
+
+
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="banner-spot clearfix">
+                    <div class="banner-img">
+                            <img src="https://hamrobazaar.com/layout_images/logo.gif" alt="" class="img-fluid" style="height: 100px; object-fit: cover;">
+                    </div><!-- end banner-img -->
+                </div><!-- end banner -->
+            </div><!-- end col -->
+        </div><!-- end row -->
+
+        <hr class="invis1">
+
+        
+
+        <hr class="invis1">
+
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="banner-spot clearfix">
+                    <div class="banner-img">
+                        <img src="https://designertask.com/wp-content/uploads/2018/05/soundcloud-banner-size.png" alt="" class="img-fluid">
+                    </div><!-- end banner-img -->
+                </div><!-- end banner -->
+            </div><!-- end col -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section>
+
+<script>
+        $(document).ready(function(){
+    $(".post-media").on("click", function(){
+        // var dataId = $(this).attr("data-heading");
+        // $(this).addClass("actives")
+        $(this).attr('id', 'media-grab');
+        // $('.post-media').eq(0).attr('id', 'foobar');
+        var imagesss = $('#media-grab').children('p').map(function(){
+return $(this).attr('src')
+}).get()
+
+
+        $('#asdf').on('show.bs.modal', function (event) {
+var button = $(event.relatedTarget) // Button that triggered the modal
+var heading = button.data('heading')
+var news = button.data('news')
+var category = button.data('category')
+var timestamp = button.data('timestamp')
+var image0 = button.data('image0')
+var image1 = button.data('image1')
+var image2 = button.data('image2')
+var image3 = button.data('image3')
+var author = button.data('author') // Extract info from data-* attributes
+// If necessary, you could  an AJAX request here (and then do the updating in a callback).
+// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+var modal = $(this)
+modal.find('#heads').text(heading)
+modal.find('#news').text(news)
+modal.find('#category').text(category)
+modal.find('#author').text(author)
+modal.find('#timestamp').text(timestamp)
+// modal.find('#owl-images').trigger('refresh.owl.carousel')
+
+var i = 0,
+        len = imagesss.length;        
+    for (; i < imagesss.length; i++) {
+        modal.find('#owl-images').trigger('refresh.owl.carousel').trigger('add.owl.carousel', ['<div class="item" id="items-id"><img src="'+ imagesss[i] + '" alt="" class="carousel-images"></div>'])
+    }
+    imagesss = 0; // setting value to zero so it doesnt repeat.
+
+    $('#asdf').on('hidden.bs.modal', function () {
+    // revertToOriginalURL();
+    window.addEventListener('popstate', e => {
+        selectBox(e.state.id);
+    });
+    for (var i=0;i < 4; i++) {
+            $("#owl-images").trigger('remove.owl.carousel', [1]).trigger('refresh.owl.carousel'); 
+    }
+    $('.post-media').removeAttr('id');
+    history.replaceState({ id: null }, 'Default state', '../');
+});
+
+
+})
+    });
+    
+});
+</script>
+<!-- <script src="{% static 'owlcarousel/script.js' %}" type="text/JavaScript"></script> -->
+<script src="{% static 'js/owl.carousel.min.js' %}" type="text/JavaScript"></script>
+<script src="{% static 'js/all_news.js' %}" type="text/JavaScript"></script>
+<script src="{% static 'js/urlchange.js' %}" type="text/JavaScript"></script>
+{% endblock %}
+
+
+[vc_row css=".vc_custom_1502210615550{margin-top: 60px !important;}"][vc_column][vc_single_image image="1013" img_size="full" alignment="center"][/vc_column][/vc_row][vc_row][vc_column css=".vc_custom_1502529981371{margin-top: 0px !important;padding-top: 0px !important;padding-right: 35px !important;}" offset="vc_col-lg-9 vc_col-md-12"][box_category layout_types="box2" type_post="yes" show_cate="" number_post="3" filter="yes" text_align="yes" title="Trending this Week" category_name="entertainment,style,summer"][box_category layout_types="box6" show_cate="" number_post="4" filter="" text_align="" title="Summer" category_name="summer" el_class="left" link="" cat_link="http://jobsinfosys.com/category/summer/"][box_category layout_types="box2b" show_cate="" number_post="3" filter="" title="Entertainment" category_name="entertainment" el_class="left" link="http://redmag.nanoagency.co/category/summer/" cat_link="http://redmag.nanoagency.co/category/entertainment/"][box_category layout_types="box2" show_cate="" number_post="3" filter="" title="Lifestyle" category_name="style" el_class="left" cat_link="http://redmag.nanoagency.co/category/lifestyle/"][vc_single_image image="912" img_size="full" alignment="center" css=".vc_custom_1502365782942{margin-top: 30px !important;}"][/vc_column][vc_column el_class="sidebar" css=".vc_custom_1502529975397{margin-top: 35px !important;margin-bottom: -35px !important;padding-right: 15px !important;padding-left: 15px !important;}" offset="vc_col-lg-3 vc_col-md-12"][vc_widget_sidebar sidebar_id="sidebar1"][/vc_column][/vc_row]

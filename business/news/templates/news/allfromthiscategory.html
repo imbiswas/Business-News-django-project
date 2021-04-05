@@ -1,0 +1,127 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9 mt-4">
+            <div class="blog-list clearfix">
+                {% for news_in_cat in news%}
+                <div class="blog-box row">
+                    <div class="col-md-4">
+                        <div class="post-media">
+                            <a href="/news/{{news_in_cat.slug}}" title="">
+                                <img src="{{ news_in_cat.images_set.first.image.url }}" alt=""
+                                    class="img-fluid" style="height: 200px; object-fit: cover">
+                                <div class="hovereffect"></div>
+                            </a>
+                        </div><!-- end media -->
+                    </div><!-- end col -->
+                    <div class="blog-meta big-meta col-md-8">
+                        <h4><a href="single.html" title="">{{news_in_cat.Heading}}</a>
+                        </h4>
+                        <p>{{news_in_cat.excerpt}}</p>
+                        <small><a href="blog-category-01.html" title="">{{news_in_cat.category}}</a></small>
+                        <small><a href="single.html" title="">{{news_in_cat.timestamp}}</a></small>
+                        <small><a href="blog-author.html" title="">by {{news_in_cat.author}}</a></small>
+                    </div><!-- end meta -->
+                </div><!-- end blog-box -->
+
+                <hr class="invis">
+                {% endfor %}
+
+            </div><!-- end blog-list -->
+
+            <hr class="invis">
+
+            <div class="section-title">
+                    <h3 class="color-yellow"><a href="blog-category-01.html" title="">You May Also Like</a></h3>
+                </div><!-- end title -->
+            <div class = "row">
+                {% for items in recommended_news  %}
+                    <div class="col-lg-4">
+                        <div class="blog-box">
+                        <a href="/news/{{items.slug}}" title="">
+                        <div class="post-media">
+                                
+                                    <img src="{{ items.images_set.first.image.url }}" alt="" class="img-fluid" style="height: 200px; object-fit: cover;">
+                                    <div class="hovereffect">
+                                        <span class="videohover"></span>
+                                    </div><!-- end hover -->
+                            </div><!-- end media -->
+                        </a>
+                            
+                            <div class="blog-meta">
+                                <h4><a href="/news/{{items.slug}}" title="">{{items.Heading}}</a></h4>
+                                <small><a href="blog-category-01.html" title="">{{items.category}}</a></small>
+                                <small><a href="blog-category-01.html" title="">{{items.timestamp}}</a></small>
+                            </div><!-- end meta -->
+                        </div><!-- end blog-box -->
+                        <hr class="invis">    
+                    </div><!-- end col -->
+                    {% endfor %}
+                </div><!-- row -->
+
+        </div><!-- end col -->
+        <div class="col-lg-3 mt-4">
+                <div class="sidebar">
+                        <div class="widget">
+                                <div class="section-title">
+                                        <h3 class="color-green"><a href="blog-category-01.html" title="">Recent Posts</a></h3>
+                                    </div><!-- end title -->
+                                
+                                <div class="blog-list-widget">
+                                    <div class="list-group">
+                                            {% for items in recommended_news  %}
+                                        
+                                        <a href="{{items.slug}}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                            <div class="w-100 justify-content-between">
+                                                <img src="{{ items.images_set.first.image.url }}" alt="" class="img-fluid float-left">
+                                                <h5 class="mb-1">{{items.Heading}}</h5>
+                                                <small>12 Jan, 2016</small>
+                                            </div>
+                                        </a>
+                                        {% endfor  %}
+            
+                                    </div>
+                                </div><!-- end blog-list -->
+                            </div><!-- end widget -->
+                            <div class="widget">
+                                    <h2 class="widget-title">Advertising</h2>
+                                    <div class="banner-spot clearfix">
+                                        <div class="banner-img">
+                                            <img src="https://designertask.com/wp-content/uploads/2018/05/soundcloud-banner-size.png" alt="" class="img-fluid">
+                                        </div><!-- end banner-img -->
+                                    </div><!-- end banner -->
+                                </div><!-- end widget -->
+                                <div class="widget">
+                                        <div class="section-title">
+                                                <h3 class="color-green"><a href="blog-category-01.html" title="">Popular Posts</a></h3>
+                                            </div><!-- end title -->
+                                        {% for items in recommended_news%}
+                                            <div class="blog-box">
+                                                <div class="post-media">
+                                                    <a href="{{items.slug}}" title="">
+                                                        <img src="{{ items.images_set.first.image.url }}" alt="" class="img-fluid">
+                                                        <div class="hovereffect">
+                                                            <span class="videohover"></span>
+                                                        </div><!-- end hover -->
+                                                    </a>
+                                                </div><!-- end media -->
+                                                <div class="blog-meta">
+                                                    <h4><a href="{{items.slug}}" title="">{{items.Heading}}</a></h4>
+                                                    <small><a href="blog-category-01.html" title="">{{items.category}}</a></small>
+                                                    <small><a href="blog-category-01.html" title="">{{items.timestamp}}</a></small>
+                                                </div><!-- end meta -->
+                                            </div><!-- end blog-box -->
+                            
+                                            <hr class="invis">
+                                        {% endfor %}
+                                </div>
+                </div>
+            </div><!-- end col -->
+    </div><!-- end row -->
+</div>
+<!-- {% for news_in_cat in news  %}
+    <h1>{{news_in_cat.Heading}}</h1>
+{% endfor %} -->
+{% endblock %}

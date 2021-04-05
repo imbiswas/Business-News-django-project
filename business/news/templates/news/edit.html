@@ -1,0 +1,127 @@
+{% extends "news/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+
+    <br />
+
+    {% if request.GET.q != '' %}
+    {% if results %}
+    <h1>Results for News <b>{{ request.GET.q }}</b></h1>
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="blog-list clearfix">
+                <div class="section-title">
+                    <!-- <h3 class="color-green"><a href="blog-category-01.html" title="">Searched News</a></h3> -->
+                </div><!-- end title -->
+                {% for result in results%}
+                <div class="blog-box row " id="{{result.slug}}" data-heading="{{result.Heading}}"
+                    data-category="{{results.category}}" data-timestamp="{{result.timestamp}}"
+                    data-news="{{result.News}}" data-author="{{result.author}}" data-toggle="modal"
+                    data-target="">
+                    <div class="col-md-4">
+                    <a href="/news/{{result.slug}}" title="">
+                     <div class="post-media" id="media-grab">
+                            
+                                <img src="{{ result.images_set.first.image.url }}" alt="" class="img-fluid"
+                                    style="height: 200px; object-fit: cover">
+                                    {% for result in product.images_set.all %} 
+                                                        <p src="{{p.image.url}}" style="display: none;">
+                                                        {% endfor %}
+                                <div class="hovereffect"></div>
+                            
+                        </div><!-- end media -->
+                    </a>
+                       
+                    </div><!-- end col -->
+                    <div class="blog-meta big-meta col-md-8">
+                        <h4>{{result.Heading}}
+                        </h4>
+                        <p class="text-justify">{{result.excerpt}}</p>
+                        <small><a href="/news/{{result.slug}}" title="">{{result.category}}</a></small>
+                        <small><a href="single.html" title="">{{result.timestamp}}</a></small>
+                        <small><a href="blog-author.html" title="">by {{result.author}}</a></small>
+                        <a class="btn btn-primary btn-sm" href= "{% url 'news_update' result.slug %}" role="button" >Edit</a>
+                        <a class="btn btn-danger btn-sm" href="{% url 'news_delete' result.slug %}" title="">Delete</a>
+                        <!-- <form action="{% url 'news_update' result.slug %}" method="post" style="display: inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 4px;">Edit</button>
+                        </form> -->
+                        <!-- <a class="btn btn-primary btn-sm" href= "{% url 'news_update' result.slug %}" role="button" >Edit</a>
+                        <form action="{% url 'news_delete' result.slug %}" method="post" style="display: inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm" style="margin-left: 10px; margin-top: 4px;">Delete</button>
+                        </form> -->
+                        
+                    </div><!-- end meta -->
+                </div><!-- end blog-box -->
+                <hr class="invis">
+                {% endfor %}
+            </div><!-- end blog-list -->
+            <hr class="invis">
+            </div><!-- row -->
+        </div><!-- end col -->
+        
+    </div><!-- end row -->
+</div>
+
+{% else %}
+No search results for this query
+{% endif %}
+{% endif %}
+<script>
+    $(document).ready(function () {
+        $(".post-media").on("click", function () {
+            // var dataId = $(this).attr("data-heading");
+            $(this).addClass("actives")
+            // $('.post-media').eq(0).attr('id', 'foobar');
+            var imagesss = $('.actives').children('img').map(function () {
+                return $(this).attr('src')
+            }).get()
+
+            // alert("The data-id of clicked item is: " + imagesss);
+
+
+            $('#asdf').on('show.bs.modal', function (event) {
+                var imagess = $('#media-grab').children('img').map(function () {
+                    return $(this).attr('src')
+                }).get()
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var heading = button.data('heading')
+                var news = button.data('news')
+                var category = button.data('category')
+                var timestamp = button.data('timestamp')
+                var images = button.data('images')
+                var author = button.data('author') // Extract info from data-* attributes
+                // If necessary, you could  an AJAX request here (and then do the updating in a callback).
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                modal.find('#heads').text(heading)
+                modal.find('#news').text(news)
+                modal.find('#category').text(category)
+                modal.find('#author').text(author)
+                modal.find('#timestamp').text(timestamp)
+                var i = 0,
+                    len = imagesss.length;
+                for (; i < imagesss.length; i++) {
+                    // modal.find('#owl-images').attr('src', imagess[3])
+                    // modal.find('#owl-images').append("<div class='item'><img class='roll' src='" + imagess[i] + "'></div>");
+                    modal.find('#owl-images').trigger('add.owl.carousel', ['<div class="item" id="items-id"><img src="' + imagesss[i] + '" alt="" class="carousel-images"></div>'])
+                        .trigger('refresh.owl.carousel');
+
+                    //    x.append("<img class='roll' src='" + imagess[i] + "'>");
+                }
+
+
+            })
+        });
+
+    });
+</script>
+<!-- <script src="{% static 'owlcarousel/script.js' %}" type="text/JavaScript"></script> -->
+<script src="{% static 'js/owl.carousel.min.js' %}" type="text/JavaScript"></script>
+<script src="{% static 'js/all_news.js' %}" type="text/JavaScript"></script>
+<script src="{% static 'js/urlchange.js' %}" type="text/JavaScript"></script>
+{% endblock%}
+

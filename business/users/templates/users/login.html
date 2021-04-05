@@ -1,0 +1,105 @@
+{% extends "home/base.html" %}
+{% block content%} {% load crispy_forms_tags %} {% load static %}
+
+<head>
+  <link rel="shortcut icon" href="/media/logo/logo.png" />
+
+  <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  />
+  <script
+    type="text/javascript"
+    href="http:/cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js"
+  ></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+    crossorigin="anonymous"
+  />
+
+  <link rel="stylesheet" type="text/css" href="{% static 'signin.css' %}" />
+</head>
+
+<body class="whole-back">
+  <main class="main-back">
+    <div class="container text-center">
+      <p id="status"></p>
+      <div class="login-body mt-5">
+        
+        <form class="form-signin login-form" action="" method="POST">
+          {%csrf_token%}
+          <!-- method="POST" action="tech-admin-includes\signin.php" -->
+          <!-- <img
+            class="mb-4"
+            src="/media/logo/logo.png"
+            alt=""
+            width="72"
+            height="72"
+          /> -->
+          
+          <h2 class="h3 mb-3 font-weight-normal">
+            Sign In Here
+          </h2>
+          <div class="input-group mt-4 mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"
+                ><i class="fas fa-user-ninja"></i
+              ></span>
+            </div>
+            <label for="inputEmail" class="sr-only"
+              >Username/Email address</label
+            >
+            {{ form.username }}
+          </div>
+          <div class="input-group mt-4 mb-4">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"
+                ><i class="fas fa-fingerprint"></i
+              ></span>
+            </div>
+            <label for="inputPassword" class="sr-only">Password</label>
+            {{ form.password }}
+          </div>
+
+          <p class="message">
+            <a href="{% url 'reset_password' %}"> Forget password</a>
+          </p>
+          <p class="message">
+            Not registered? <a href="{% url 'signup' %}">Create an account</a>
+          </p>
+
+          <button
+            class="btn btn-lg btn-primary btn-block"
+            name="admin_signin"
+            type="submit"
+          >
+            Sign in
+          </button>
+          
+          
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    $(document).ready(function() {
+      var fnx = document.getElementById("id_username");
+      fnx.classList.add("form-control");
+    });
+
+    $(document).ready(function() {
+      var fnx = document.getElementById("id_password");
+      fnx.classList.add("form-control");
+    });
+  </script>
+</body>
+
+
+<!-- lalalaalgit -->
+
+{% endblock content %}
